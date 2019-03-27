@@ -1,7 +1,7 @@
 {
     "name": "kirki-framework/url-getter",
     "type": "library",
-    "description": "Helper component to get the URL of a file.",
+    "description": "Helper component to get the URL of a file in WordPress.",
     "keywords": ["wordpress"],
     "homepage": "https://aristath.github.io/kirki",
     "license": "MIT",
