@@ -64,7 +64,7 @@ class URL {
 	 * @param string $path Absolute path to a file.
 	 */
 	public function __construct( $path ) {
-		$this->path = wp_normalize_path( $path );
+		$this->path = \wp_normalize_path( $path );
 		$this->set_content_url();
 		$this->set_content_path();
 	}
@@ -82,32 +82,32 @@ class URL {
 		 * Start by replacing ABSPATH with site_url.
 		 * This is not accurate at all and only serves as a fallback in case everything else fails.
 		 */
-		$this->url = str_replace( ABSPATH, trailiningslashit( site_url() ), $this->path ); 
+		$this->url = \str_replace( ABSPATH, \trailingslashit( \site_url() ), $this->path ); 
 
 		/**
 		 * If the file-path is inside wp-content replace the content-path with the content-url.
 		 * This serves as a fallback in case the other tests below fail.
 		 */
-		if ( false !== strpos( $this->path, self::$content_path ) ) {
-			$this->url = str_replace( self::$content_dir, self::content_url, $this->path );
+		if ( false !== \strpos( $this->path, self::$content_path ) ) {
+			$this->url = \str_replace( self::$content_path, self::$content_url, $this->path );
 		}
 
 		/**
 		 * If the file is in a parent theme use the template directory.
 		 */
 		if ( $this->in_parent_theme() ) {
-			$this->url = get_template_directory_uri() . str_replace( get_template_directory(), '', $this->path );
+			$this->url = \get_template_directory_uri() . \str_replace( \get_template_directory(), '', $this->path );
 		}
 
 		/**
 		 * If the file is in a child-theme use the stylesheet directory.
 		 */
 		if ( ! $this->in_parent_theme() && $this->in_child_theme() ) {
-			$this->url = get_stylesheet_directory_uri() . str_replace( get_stylesheet_directory(), '', $this->path );
+			$this->url = \get_stylesheet_directory_uri() . \str_replace( \get_stylesheet_directory(), '', $this->path );
 		}
 
-		$this->url = set_url_scheme( $this->url );
-		return apply_filters( 'kirki_path_url', $this->url, $this->path );
+		$this->url = \set_url_scheme( $this->url );
+		return \apply_filters( 'kirki_path_url', $this->url, $this->path );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class URL {
 	 * @return bool
 	 */
 	public function in_parent_theme() {
-		return ( false === strpos( $this->path, get_template_directory() ) );
+		return ( false === \strpos( $this->path, \get_template_directory() ) );
 	}
 
 	/**
@@ -129,7 +129,7 @@ class URL {
 	 * @return bool
 	 */
 	public function in_child_theme() {
-		return ( false === strpos( $this->path, get_stylesheet_directory() ) );
+		return ( false === \strpos( $this->path, \get_stylesheet_directory() ) );
 	}
 
 	/**
@@ -140,8 +140,8 @@ class URL {
 	 * @return void
 	 */
 	private function set_content_url() {
-		if ( ! $this->content_url ) {
-			$this->content_url = untrailingslashit( content_url() );
+		if ( ! self::$content_url ) {
+			self::$content_url = \untrailingslashit( \content_url() );
 		}
 	}
 
@@ -153,8 +153,8 @@ class URL {
 	 * @return void
 	 */
 	private function set_content_path() {
-		if ( ! $this->content_path ) {
-			$this->content_path = wp_normalize_path( untrailingslashit( WP_CONTENT_DIR ) );
+		if ( ! self::$content_path ) {
+			self::$content_path = \wp_normalize_path( \untrailingslashit( WP_CONTENT_DIR ) );
 		}
 	}
 }
