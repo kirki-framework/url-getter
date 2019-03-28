@@ -79,7 +79,7 @@ class URL {
 	 * @return URL         An instance of this object.
 	 */
 	public static function get_instance( $path ) {
-		$path = wp_normalize_path( $path );
+		$path = \wp_normalize_path( $path );
 		if ( ! isset( self::$instances[ $path ] ) ) {
 			self::$instances[ $path ] = new self( $path );
 		}
@@ -94,7 +94,7 @@ class URL {
 	 * @param string $path Absolute path to a file.
 	 */
 	private function __construct( $path ) {
-		$this->path = \wp_normalize_path( $path );
+		$this->path = ( $path );
 		$this->set_content_url();
 		$this->set_content_path();
 	}
@@ -104,6 +104,7 @@ class URL {
 	 *
 	 * @static
 	 * @access public
+	 * @since 1.0.2
 	 * @param string $path The file path.
 	 * @return string
 	 */
