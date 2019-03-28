@@ -29,7 +29,7 @@ class URL {
 	 * @since 1.0.2
 	 * @var array
 	 */
-	private $instances = [];
+	private static $instances = [];
 
 	/**
 	 * The file path.
